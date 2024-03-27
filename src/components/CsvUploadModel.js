@@ -64,5 +64,4 @@ const CsvUploadModel = ({ closeModal }) => {
     </div>
   );
 };
-
 export default CsvUploadModel;

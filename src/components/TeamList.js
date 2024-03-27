@@ -9,6 +9,7 @@ import {
   faToggleOn,
   faToggleOff,
   faCog,
+  faShare,
   faUser,
   faCheck,
   faVectorSquare,
@@ -118,12 +119,14 @@ const TeamList = () => {
               .map((item) => (
                 <div
                   key={item.id}
-                  className="p-4 font-gilroy text-14px rounded-lg shadow-md mb-2 bg-purple-600 text-white "
+                  className="flex justify-between items-center p-4 font-gilroy text-14px rounded-lg shadow-md mb-2 bg-purple-600 text-white"
                 >
-                  {item.value}
+                  <span>{item.value}</span>
+                  <FontAwesomeIcon icon={faShare} />
                 </div>
               ))}
           </div>
+          ;
         </ul>
       </div>
 

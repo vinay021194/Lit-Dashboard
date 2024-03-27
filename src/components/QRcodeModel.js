@@ -1,6 +1,18 @@
 import React from "react";
+import { useRef, useState } from "react";
 
-const QRcodemodel = ({ closeModal }) => {
+const QRcodemodel = ({ closeModal, text }) => {
+  const inputRef = useRef(null);
+  const [copied, setCopied] = useState(false);
+  const copyToClipboard = () => {
+    inputRef.current.select();
+    document.execCommand("copy");
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  };
+
   return (
     <div className="fixed inset-0 flex justify-center items-center z-10">
       {/* Backdrop overlay */}
@@ -15,136 +27,61 @@ const QRcodemodel = ({ closeModal }) => {
             Close
           </button>
         </div>
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="ant-modal assignTeamModalParent"
-          style={{ width: "520px", transformOrigin: "-206.5px 701.742px" }}
-        >
-          <div
-            tabIndex="0"
-            aria-hidden="true"
-            style={{
-              width: "0px",
-              height: "0px",
-              overflow: "hidden",
-              outline: "none",
-            }}
-          ></div>
-          <div className="ant-modal-content">
-            <button
-              type="button"
-              aria-label="Close"
-              className="ant-modal-close"
-            >
-              <span className="ant-modal-close-x">
-                <span
-                  role="img"
-                  aria-label="close"
-                  className="anticon anticon-close ant-modal-close-icon"
-                ></span>
+        <div className="qrCodeModalContent">
+          <h1 className="modalHeading">Invite participants to Qualified</h1>
+          <div className="modalBody">
+            <div className="qrCodeInfo">
+              <span className="qrCodeInfoTextLink">
+                <span className="linkIcon">🔗</span> Invite via Link
               </span>
-            </button>
-            <div className="ant-modal-body">
-              <div className="assignTeamModal">
-                <h1 className="ant-typography assignTeamModalHeading">
-                  Invite participants to Qualified
-                </h1>
-                <div className="assignTeamModalContent">
-                  <div className="qrCodeInfo">
-                    <span className="ant-typography qrCodeInfoTextLink">
-                      <span
-                        role="img"
-                        aria-label="link"
-                        className="anticon anticon-link"
-                      ></span>{" "}
-                      Invite via Link
-                    </span>
-                  </div>
-                  <div className="invitelinkField">
-                    <div className="qrCodeInfoText">
-                      <span className="ant-typography">
-                        <div
-                          role="button"
-                          tabIndex="0"
-                          className="ant-typography-copy"
-                          aria-label="Copy"
-                          style={{
-                            border: "0px",
-                            background: "transparent",
-                            padding: "0px",
-                            lineHeight: "inherit",
-                            display: "inline-block",
-                          }}
-                        >
-                          <span
-                            role="img"
-                            aria-label="copy"
-                            className="anticon anticon-copy"
-                          ></span>
-                        </div>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="qrCodeInfo">
-                    <span className="ant-typography qrCodeInfoText or">Or</span>
-                    <span className="ant-typography qrCodeInfoTextLink">
-                      Scan QR Code
-                      <a download="" href="">
-                        <span role="img" className="anticon"></span>
-                      </a>
-                    </span>
-                    <span className="ant-typography qrCodeInfoTextLink none">
-                      Scan or{" "}
-                      <a
-                        download=""
-                        href=""
-                        style={{
-                          marginRight: "0.2rem",
-                          marginLeft: "0.2rem",
-                          color: "rgb(102, 102, 102)",
-                          textDecoration: "underline",
-                        }}
-                      >
-                        Download
-                      </a>{" "}
-                      QR Code
-                    </span>
-                  </div>
-                  <div className="qrCodeBox">
-                    <div className="ant-image">
-                      <img
-                        className="ant-image-img"
-                        src="URL_HERE"
-                        alt="QR Code"
-                      />
-                    </div>
-                  </div>
-                  <div className="attentionMessageBlock">
-                    <strong className="attentionMessageBlockTitle">
-                      ATTENTION:
-                    </strong>
-                    1. Do not use iPhone's default QR code scanner as it is
-                    unreliable for prolonged sessions.
-                    <br />
-                    2. Try to avoid using Slamitt on an in-app browser (like
-                    within Gmail, Instagram, etc). Instead, launch the link into
-                    a completely new browser session for uninterrupted use.
-                  </div>
-                </div>
+            </div>
+            <div className="flex items-center">
+              <input
+                ref={inputRef}
+                type="text"
+                value={text}
+                readOnly
+                className="w-32 p-2 border border-gray-300 rounded-md mr-2 focus:outline-none"
+              />
+              <button
+                onClick={copyToClipboard}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                {copied ? "Copied!" : "Copy"}
+              </button>
+            </div>
+            <div className="qrCodeInfo">
+              <span className="orText">Or</span>
+              <span className="qrCodeInfoTextLink">
+                Scan QR Code
+                <a download="" href="">
+                  <span className="downloadIcon">⬇️</span>
+                </a>
+              </span>
+            </div>
+            <div className="qrCodeBox">
+              <div className="qrCodeImage">
+                <img
+                  src="download.png"
+                  alt="QR Code"
+                  className="qrImage"
+                  style={{ width: "200px", height: "200px" }} // Adjust width and height as needed
+                />
               </div>
             </div>
+            <div className="attentionMessageBlock">
+              <strong>ATTENTION:</strong>
+              <p>
+                1. Do not use iPhone's default QR code scanner as it is
+                unreliable for prolonged sessions.
+              </p>
+              <p>
+                2. Try to avoid using Slamitt on an in-app browser (like within
+                Gmail, Instagram, etc). Instead, launch the link into a
+                completely new browser session for uninterrupted use.
+              </p>
+            </div>
           </div>
-          <div
-            tabIndex="0"
-            aria-hidden="true"
-            style={{
-              width: "0px",
-              height: "0px",
-              overflow: "hidden",
-              outline: "none",
-            }}
-          ></div>
         </div>
       </div>
     </div>
